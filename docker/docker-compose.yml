@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 
 services:
   cs:
@@ -7,23 +7,37 @@ services:
       dockerfile: ./docker/Dockerfile
     image: "cs:latest"
     ports:
-      - "3000:3000"
+      - "8080:8080"
     stdin_open: true
     tty: true
+    privileged: true
     depends_on:
       - pg
     volumes:
-      - "../:/app"
+      - type: bind
+        source: ..
+        target: /app
     environment:
-      - POSTGRES_PASSWORD
-      - TEST_ONLINE
+      - POSTGRES_PASSWORD=qwer
+      - POSTGRES_USER=postgres
+    networks:
+      - checksystem
+
   pg:
     image: "postgres:12"
+    privileged: true
     volumes:
       - "dbdata:/var/lib/postgresql/data"
       - "./create_db.sql:/docker-entrypoint-initdb.d/create_db.sql"
     environment:
-      - POSTGRES_PASSWORD
+      - POSTGRES_PASSWORD=qwer
+      - POSTGRES_USER=postgres
+    networks:
+      - checksystem
 
 volumes:
   dbdata:
+
+networks:
+  checksystem:
+    driver: bridge
