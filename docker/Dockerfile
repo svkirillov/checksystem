@@ -5,9 +5,8 @@ ADD cpanfile /
 RUN cpanm -n --installdeps /
 RUN cpanm -n DDP
 
-RUN apt-get update && apt-get install -y less
+VOLUME /app
 
 WORKDIR /app
-COPY . /app
 
-CMD ["/bin/bash"]
+CMD ["/app/docker/checksystem-entrypoint.sh"]

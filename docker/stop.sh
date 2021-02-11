@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 docker-compose down
-docker volume rm docker_dbdata
+# docker volume rm docker_dbdata

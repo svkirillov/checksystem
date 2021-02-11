@@ -1,1 +1,2 @@
-create database cs_test owner postgres;
+create user cs with encrypted password 'zLjTseSu';
+create database cs owner cs;

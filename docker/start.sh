@@ -1,15 +1,14 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 8)
-sed -i -E "s/\{auth => 'root:[a-zA-Z0-9]{8}'\}/\{auth => 'root:$PASSWORD'\}/i" ../c_s.conf
+DB_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 8)
+ROOT_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 8)
+FLAG_SECRET=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 8)
 
-docker volume rm docker_dbdata
+sed -i -E "s/'[a-zA-Z0-9]{8}'/'$DB_PASSWORD'/" create_db.sql
+sed -i -E "s/cs:[a-zA-Z0-9]{8}/cs:$DB_PASSWORD/" ../c_s.conf
+sed -i -E "s/\{auth => 'root:[a-zA-Z0-9]{8}'\}/\{auth => 'root:$ROOT_PASSWORD'\}/i" ../c_s.conf
+sed -i -E "s/\{secret => '[a-zA-Z0-9]{8}'\}/\{secret => '$FLAG_SECRET'\}/i" ../c_s.conf
+
+# docker volume rm docker_dbdata
 
 docker-compose up -d
-
-sleep 2
-
-echo "password is 'qwer'"
-docker-compose exec pg bash -c "runuser -u postgres -- createuser -P cs ; sleep 2 ; runuser -u postgres -- createdb -O cs cs"
-
-docker-compose exec -d cs bash -c "script/cs init_db; sleep 2; script/cs manager & sleep 2; script/cs flags & sleep 2; script/cs minion worker -j 3 & sleep 2 ; script/cs minion worker -q checker -j 48 & sleep 2; hypnotoad script/cs ; sleep 1; hypnotoad script/cs; tail -f /dev/null"

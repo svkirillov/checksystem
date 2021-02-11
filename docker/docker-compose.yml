@@ -17,9 +17,6 @@ services:
       - type: bind
         source: ..
         target: /app
-    environment:
-      - POSTGRES_PASSWORD=qwer
-      - POSTGRES_USER=postgres
     networks:
       - checksystem
 
@@ -27,16 +24,18 @@ services:
     image: "postgres:12"
     privileged: true
     volumes:
-      - "dbdata:/var/lib/postgresql/data"
+      # - "dbdata:/var/lib/postgresql/data"
       - "./create_db.sql:/docker-entrypoint-initdb.d/create_db.sql"
+    ports:
+      - "5432:5432"
     environment:
-      - POSTGRES_PASSWORD=qwer
       - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     networks:
       - checksystem
 
-volumes:
-  dbdata:
+# volumes:
+#   dbdata:
 
 networks:
   checksystem:

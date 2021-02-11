@@ -1,6 +1,17 @@
 # checksystem [![Build Status](https://travis-ci.org/HackerDom/checksystem.svg?branch=master)](https://travis-ci.org/HackerDom/checksystem)
 Checksystem for attack-defense CTF
 
+# Run in Docker
+
+Edit `c_s.conf` config and then run checksystem in Docker:
+
+```sh
+$ cd docker
+docker$ docker-compose build
+docker$ ./start.sh
+docker$ ./stop.sh
+```
+
 # install
 ```bash
 root# apt-get install postgresql-9.5 libssl-dev libpq-dev cpanminus build-essenial
