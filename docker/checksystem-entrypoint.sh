@@ -6,7 +6,10 @@ sleep 10
 sleep 2
 /app/script/cs manager & sleep 2
 /app/script/cs minion worker -j 3 & sleep 2
-/app/script/cs minion worker -q checker -j 48 & sleep 10
+/app/script/cs minion worker -q checker -j 48 & sleep 2
 hypnotoad /app/script/cs
+if [ "$?" -ne "0" ]; then
+	hypnotoad /app/script/cs
+fi
 
 tail -f /dev/null
