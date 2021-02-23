@@ -9,4 +9,4 @@ VOLUME /app
 
 WORKDIR /app
 
-CMD ["/app/docker/checksystem-entrypoint.sh"]
+ENTRYPOINT ["/app/docker/checksystem-entrypoint.sh"]

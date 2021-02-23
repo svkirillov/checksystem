@@ -6,7 +6,7 @@ requires 'IPC::Run'                   => '20200505';
 requires 'List::Util'                 => '1.55';
 requires 'Minion'                     => '10.14';
 requires 'Mojo::Pg'                   => '4.22';
-requires 'Mojolicious'                => '8.67';
+requires 'Mojolicious'                => '== 8.67';
 requires 'Mojolicious::Plugin::Model' => '0.11';
 requires 'Net::DNS::Native'           => '0.22';
 requires 'Proc::Killfam'              => '0.59';
