@@ -12,6 +12,7 @@ services:
     depends_on:
       - pg
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - type: bind
         source: ..
         target: /app
